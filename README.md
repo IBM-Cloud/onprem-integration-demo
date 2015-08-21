@@ -8,3 +8,7 @@ While this system sustains their business, it is typically evolved in a monolith
 Cloud computing platforms, microservices and the 12 factor app can connect to the core data (system of record) to reveal a system of engagement by quickly, lightly, and (crucially) safely surfacing their data so that it can be mixed with modern services and beautiful web, mobile or wearable interfaces.
 
 This project is an example.
+
+### Links to more information
+
+[IBM Redbook: Secure Cloud-to-Mainframe Connectivity with IBM Bluemix] (http://www.redbooks.ibm.com/redpapers/pdfs/redp5243.pdf)
