@@ -13,9 +13,9 @@ This project is an example.
 
 ## Installation
 
-Overview
+### Overview
 
-1) Create a Bluemix VM to simulate a Enterprise Data Center
+1) Create a Bluemix VM to simulate a Enterprise Data Center.
 
 2) Set up the VM with a MySQL database with HR data.
 
@@ -25,8 +25,23 @@ Overview
 
 TODO: Watson, weather, APIm, mobile, ...
 
+### Create a Bluemix VM to simulate a Enterprise Data Center.
 
+TODO
 
+### Set up the VM with a MySQL database with HR data.
+
+- ssh with key
+- sudo apt-get update
+- sudo apt-get install mysql-server
+- sudo vi /etc/mysql/my.cnf Change bind-address
+- Open port in firewall
+- sudo apt-get install curl
+- curl -sSL https://get.docker.com/ | sh
+- command given by bluemix
+
+### Create a Secure Gateway connection from Bluemix to VM
+- Create gateway for VM-IP:3306
 
 ### Links to more information
 
