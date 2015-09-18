@@ -9,6 +9,25 @@ Cloud computing platforms, microservices and the 12 factor app can connect to th
 
 This project is an example.
 
+![alt tag](https://raw.github.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png)
+
+## Installation
+
+Overview
+
+1) Create a Bluemix VM to simulate a Enterprise Data Center
+
+2) Set up the VM with a MySQL database with HR data.
+
+3) Create a Secure Gateway connection from Bluemix to VM
+
+4) Push Vaadin JPA Liberty application to Bluemix, connecting to Secure Gateway endpoint
+
+TODO: Watson, weather, APIm, mobile, ...
+
+
+
+
 ### Links to more information
 
 [IBM Redbook: Secure Cloud-to-Mainframe Connectivity with IBM Bluemix] (http://www.redbooks.ibm.com/redpapers/pdfs/redp5243.pdf)
