@@ -9,7 +9,7 @@ Cloud computing platforms, microservices and the 12 factor app can connect to th
 
 This project is an example.
 
-![alt tag](https://raw.github.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png)
+![alt tag](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
 
