@@ -50,8 +50,21 @@ TODO: Watson, weather, APIm, mobile, ...
 - Run command given by bluemix in previous step
 
 ### Step 3: Deploy Vaadin Java Liberty application
-
-TODO
+- `git clone https://github.com/IBM-Bluemix/onprem-integration-demo.git`
+- `cd hr_jpa_ui`
+- `mvn install`
+- `cf push <APP_NAME> -p target/vaadin-jpa-application.war`
+`cf cups mysql-mine -p '{
+        "jdbcUrl": "jdbc:mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees",
+        "uri": "mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees?reconnect=true",
+        "name": "employees",
+        "hostname": "cap-sg-prd-3.integration.ibmcloud.com",
+        "port": "15302",
+        "user": "root",
+        "password": "password"
+      }'`
+`cf bind-service <APPNAME> mysql-mine`
+`cf restage <APP_NAME>`
 
 ### Links to more information
 
