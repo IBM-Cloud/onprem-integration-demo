@@ -2,13 +2,15 @@ package backend;
 
 
 import com.vividsolutions.jts.geom.GeometryFactory;
-import model.Employee;
 
+import model.Employee;
+import model.Salary;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -42,6 +44,13 @@ public class EmployeeService {
         return entityManager.createQuery(cq).getResultList();
     }
 
+    public List<Salary> findAllSalaries() {
+        CriteriaQuery<Salary> cq = entityManager.getCriteriaBuilder().
+                createQuery(Salary.class);
+        cq.select(cq.from(Salary.class));
+        return entityManager.createQuery(cq).getResultList();
+    }
+    
     public List<Employee> findByName(String filter) {
         if (filter == null || filter.isEmpty()) {
             return findAll();

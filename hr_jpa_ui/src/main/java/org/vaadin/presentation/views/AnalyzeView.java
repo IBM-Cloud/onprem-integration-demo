@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import model.Employee;
+import model.Salary;
+
 import org.vaadin.backend.CustomerService;
 import org.vaadin.backend.domain.Customer;
 import org.vaadin.backend.domain.CustomerStatus;
@@ -15,6 +18,8 @@ import org.vaadin.viritin.label.Header;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MMarginInfo;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import backend.EmployeeService;
 
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
@@ -47,37 +52,39 @@ import com.vaadin.ui.Panel;
 public class AnalyzeView extends MVerticalLayout implements View {
 
     @Inject
-    CustomerService service;
+    private EmployeeService service;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         removeAllComponents();
 
         setMargin(new MMarginInfo(false, true));
-        add(new Header("Customer analysis").setHeaderLevel(2));
+        add(new Header("Employee analysis").setHeaderLevel(2));
 
-        List<Customer> customerData = service.findAll();
-        add(ageDistribution(customerData));
-        final Component funnel = createStatusFunnel(customerData);
-        final Component gender = genderDistribution(customerData);
-        if (ScreenSize.getScreenSize() == ScreenSize.SMALL) {
-            addComponents(funnel, gender);
-        } else {
-            addComponent(new MHorizontalLayout(funnel, gender).withFullWidth());
-        }
+        List<Employee> employeeData = service.findAll();
+        add(ageDistribution(employeeData));
+        
+        add(salaryDistribution(employeeData));
+        //final Component funnel = createStatusFunnel(employeeData);
+        final Component gender = genderDistribution(employeeData);
+        //if (ScreenSize.getScreenSize() == ScreenSize.SMALL) {
+            //addComponents(funnel, gender);
+        	addComponents(gender);
+//        } else {
+//            //addComponent(new MHorizontalLayout(funnel, gender).withFullWidth());
+//        }
 
     }
 
-    private Component genderDistribution(List<Customer> customerData) {
+    private Component genderDistribution(List<Employee> employeeData) {
         int women = 0, men = 0;
-        for (Customer c : customerData) {
-            if (c.getGender() == Gender.Female) {
+        for (Employee c : employeeData) {
+            if (c.getGender().equals("F")) {
                 women++;
             } else {
                 men++;
             }
         }
-
         Chart chart = getBasicChart(ChartType.PIE);
 
         Configuration conf = chart.getConfiguration();
@@ -95,6 +102,7 @@ public class AnalyzeView extends MVerticalLayout implements View {
         conf.setSeries(series);
         return wrapInPanel(chart, "Gender");
     }
+
 
     private static Panel wrapInPanel(Chart chart, String caption) {
         Panel panel = new Panel(caption, chart);
@@ -125,6 +133,29 @@ public class AnalyzeView extends MVerticalLayout implements View {
             return Old;
         }
     }
+    
+    private enum SalaryGroup {
+
+        Fiftys(0, 60), Sixtys(60, 70), Seventies(70, 80), Eighties(80, 90), Nineties(90,100), Rich(100,1000000);
+
+        private final int min;
+        private final int max;
+
+        SalaryGroup(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public static SalaryGroup getSalaryGroup(Salary s) {
+            int salary = s.getSalary() / 1000;
+            for (SalaryGroup g : SalaryGroup.values()) {
+                if (salary <= g.max && salary > g.min) {
+                    return g;
+                }
+            }
+            return Rich;
+        }
+    }
 
     private Chart getBasicChart(ChartType type) {
         Chart chart = new Chart(type);
@@ -132,18 +163,71 @@ public class AnalyzeView extends MVerticalLayout implements View {
         chart.getConfiguration().setTitle("");
         return chart;
     }
+    
+    private Component salaryDistribution(List<Employee> employeeData) {
+        Integer[] menValues = new Integer[SalaryGroup.values().length];
+        Integer[] womenValues = new Integer[SalaryGroup.values().length];
+        for (int i = 0; i < SalaryGroup.values().length; i++) {
+            menValues[i] = 0;
+            womenValues[i] = 0;
+        }
+        
+        for (Employee c : employeeData) {
+        	if (c.getSalaries() != null && c.getSalaries().size()==1) {
+            	SalaryGroup g = SalaryGroup.getSalaryGroup(c.getSalaries().get(0));
+                if (c.getGender().equals("F")) {
+                    womenValues[g.ordinal()]++;
+                } else {
+                    menValues[g.ordinal()]++;
+                }
+            }
+        }
+        
+        Chart chart = getBasicChart(ChartType.COLUMN);
+        
+        Configuration conf = chart.getConfiguration();
 
-    private Component ageDistribution(List<Customer> customerData) {
+        XAxis xAxis = new XAxis();
+        String[] names = new String[SalaryGroup.values().length];
+        for (SalaryGroup g : SalaryGroup.values()) {
+            names[g.ordinal()] = String.format("%s-%s", g.min,
+                    g.max);
+        }
+        xAxis.setCategories(names);
+        conf.addxAxis(xAxis);
+
+        conf.getyAxis().setTitle("");
+
+        Legend legend = new Legend();
+        legend.setHorizontalAlign(HorizontalAlign.RIGHT);
+        legend.setFloating(true);
+        legend.setVerticalAlign(VerticalAlign.TOP);
+        legend.setX(-5);
+        legend.setY(5);
+        conf.setLegend(legend);
+
+        PlotOptionsColumn plotOptions = new PlotOptionsColumn();
+        plotOptions.setStacking(Stacking.NORMAL);
+        conf.setPlotOptions(plotOptions);
+
+        conf.addSeries(new ListSeries("Men", menValues));
+        conf.addSeries(new ListSeries("Women", womenValues));
+        
+        return wrapInPanel(chart, "Salary distribution");
+
+    }
+
+    private Component ageDistribution(List<Employee> employeeData) {
         Integer[] menValues = new Integer[AgeGroup.values().length];
         Integer[] womenValues = new Integer[AgeGroup.values().length];
         for (int i = 0; i < AgeGroup.values().length; i++) {
             menValues[i] = 0;
             womenValues[i] = 0;
         }
-        for (Customer c : customerData) {
+        for (Employee c : employeeData) {
             if (c.getBirthDate() != null) {
                 AgeGroup g = AgeGroup.getAgeGroup(c.getBirthDate());
-                if (c.getGender() == Gender.Female) {
+                if (c.getGender().equals("F")) {
                     womenValues[g.ordinal()]++;
                 } else {
                     menValues[g.ordinal()]++;
@@ -185,36 +269,36 @@ public class AnalyzeView extends MVerticalLayout implements View {
 
     }
 
-    private Component createStatusFunnel(List<Customer> customerData) {
-        int[] values = new int[CustomerStatus.values().length];
-        for (Customer c : customerData) {
-            if (c.getStatus() != null) {
-                values[c.getStatus().ordinal()]++;
-            }
-        }
-        Chart chart = getBasicChart(ChartType.FUNNEL);
-        DataSeries dataSeries = new DataSeries();
-        dataSeries.add(new DataSeriesItem("Imported lead",
-                values[CustomerStatus.ImportedLead.ordinal()]));
-        dataSeries.add(new DataSeriesItem("Not contacted",
-                values[CustomerStatus.NotContacted.ordinal()]));
-        dataSeries.add(new DataSeriesItem("Contacted",
-                values[CustomerStatus.Contacted.ordinal()]));
-        dataSeries.add(new DataSeriesItem("Customer",
-                values[CustomerStatus.Customer.ordinal()]));
-
-        Configuration conf = chart.getConfiguration();
-        conf.getChart().setMarginRight(75);
-
-        PlotOptionsFunnel options = new PlotOptionsFunnel();
-        options.setNeckWidthPercentage(30);
-        options.setNeckHeightPercentage(30);
-
-        options.setWidthPercentage(70);
-
-        dataSeries.setPlotOptions(options);
-        conf.addSeries(dataSeries);
-
-        return wrapInPanel(chart, "Sales funnel");
-    }
+//    private Component createStatusFunnel(List<Employee> employeeData) {
+//        int[] values = new int[CustomerStatus.values().length];
+//        for (Customer c : employeeData) {
+//            if (c.getStatus() != null) {
+//                values[c.getStatus().ordinal()]++;
+//            }
+//        }
+//        Chart chart = getBasicChart(ChartType.FUNNEL);
+//        DataSeries dataSeries = new DataSeries();
+//        dataSeries.add(new DataSeriesItem("Imported lead",
+//                values[CustomerStatus.ImportedLead.ordinal()]));
+//        dataSeries.add(new DataSeriesItem("Not contacted",
+//                values[CustomerStatus.NotContacted.ordinal()]));
+//        dataSeries.add(new DataSeriesItem("Contacted",
+//                values[CustomerStatus.Contacted.ordinal()]));
+//        dataSeries.add(new DataSeriesItem("Customer",
+//                values[CustomerStatus.Customer.ordinal()]));
+//
+//        Configuration conf = chart.getConfiguration();
+//        conf.getChart().setMarginRight(75);
+//
+//        PlotOptionsFunnel options = new PlotOptionsFunnel();
+//        options.setNeckWidthPercentage(30);
+//        options.setNeckHeightPercentage(30);
+//
+//        options.setWidthPercentage(70);
+//
+//        dataSeries.setPlotOptions(options);
+//        conf.addSeries(dataSeries);
+//
+//        return wrapInPanel(chart, "Sales funnel");
+//    }
 }

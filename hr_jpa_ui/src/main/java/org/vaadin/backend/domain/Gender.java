@@ -1,5 +1,5 @@
 package org.vaadin.backend.domain;
 
 public enum Gender {
-    Female, Male
+    Female, Male, F, M
 }

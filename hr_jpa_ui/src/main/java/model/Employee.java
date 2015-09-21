@@ -45,7 +45,7 @@ public class Employee implements Serializable {
 	private List<DeptManager> deptManagers;
 
 	//bi-directional many-to-one association to Salary
-	@OneToMany(mappedBy="employee")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="employee")
 	private List<Salary> salaries;
 
 	//bi-directional many-to-one association to Title
@@ -80,6 +80,7 @@ public class Employee implements Serializable {
 	}
 
 	public String getGender() {
+		//System.out.println("GENDER: " + gender);
 		return this.gender;
 	}
 

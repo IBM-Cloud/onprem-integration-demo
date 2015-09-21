@@ -30,7 +30,7 @@ TODO: Watson, weather, APIm, mobile, ...
 **Install MySQL**
 - sudo apt-get install mysql-server
 - sudo vi /etc/mysql/my.cnf 
-    Comment out this line: bind-address
+Comment out this line: bind-address
 - Open 3306 port in firewall
 
 **Seed with sample data**
@@ -54,17 +54,20 @@ TODO: Watson, weather, APIm, mobile, ...
 - `cd hr_jpa_ui`
 - `mvn install`
 - `cf push <APP_NAME> -p target/vaadin-jpa-application.war`
-`cf cups mysql-mine -p '{
-        "jdbcUrl": "jdbc:mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees",
-        "uri": "mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees?reconnect=true",
-        "name": "employees",
-        "hostname": "cap-sg-prd-3.integration.ibmcloud.com",
-        "port": "15302",
-        "user": "root",
-        "password": "password"
-      }'`
-`cf bind-service <APPNAME> mysql-mine`
-`cf restage <APP_NAME>`
+- 
+```
+cf cups mysql-mine -p '{
+"jdbcUrl": "jdbc:mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees",
+"uri": "mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees?reconnect=true",
+"name": "employees",
+"hostname": "cap-sg-prd-3.integration.ibmcloud.com",
+"port": "15302",
+"user": "root",
+"password": "password"
+}'
+```
+- `cf bind-service <APPNAME> mysql-mine`
+- `cf restage <APP_NAME>`
 
 ### Links to more information
 

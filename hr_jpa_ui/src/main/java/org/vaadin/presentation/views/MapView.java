@@ -23,7 +23,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Notification;
 
-@CDIView("map")
+//@CDIView("map")
 @ViewMenuItem(icon = FontAwesome.GLOBE, order = 1)
 public class MapView extends MVerticalLayout implements View {
 
@@ -35,7 +35,7 @@ public class MapView extends MVerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        add(new Header("Customers on map").setHeaderLevel(2));
+        add(new Header("Employees on map").setHeaderLevel(2));
         expand(worldMap);
         setMargin(new MarginInfo(false, true, true, true));
 
