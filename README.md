@@ -15,7 +15,9 @@ There are many different components of this demo, which make the installation no
 ### Overview
 
 1) Setup an OpenStack VM with a database to simulate a Enterprise Data Center.
+
 2) Create a Secure Gateway connection to the database running in the VM.
+
 3) Push Vaadin JPA Liberty application to Bluemix, connecting to Secure Gateway endpoint.
 
 TODO: Watson, weather, APIm, mobile, ...
