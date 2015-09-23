@@ -41,6 +41,11 @@ sudo vi /etc/mysql/my.cnf
 ```
 Comment out this line: bind-address
 - Open 3306 port in firewall
+```
+sudo ufw allow 3306/tcp
+
+sudo service mysql restart
+```
 
 **Seed with sample data**
 
