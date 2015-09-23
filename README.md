@@ -50,7 +50,7 @@ sudo service mysql restart
 **Seed with sample data**
 
 ```
-wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
+wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql > db.sql
 
 mysql -u root -p -t < db.sql
 ```
