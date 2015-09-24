@@ -1,0 +1,8 @@
+applications:
+- name: onprem-integration-demo
+  host: onprem-integration-demo
+  path: .
+  domain: mybluemix.net
+  instances: 1
+  memory: 256M
+  buildpack: liberty-for-java
