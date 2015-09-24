@@ -55,7 +55,7 @@ We will use a VM in this demo to represent our enterprise data center. We will h
 	```
 	$ sudo apt-get install mysql-server
 	```
-	Assign a password to your VM and be sure to remember it for step 8.
+	Assign a password to your VM and be sure to keep it handy for the rest of the setup.
 	
 6. Comment out the `bind-address` line in your MySQL options file using `vim`:
 
@@ -64,16 +64,27 @@ We will use a VM in this demo to represent our enterprise data center. We will h
 	```
 	For reference, here is a [vim commands cheatsheet][vim_cheatsheet_url].
 
-7. Open up port 3306 in the VM firewall and restart MySQL:
+7. Open up port 3306 in the VM's firewall:
 
 	```
 	$ sudo ufw allow 3306/tcp
-	$ sudo service mysql restart
 	```
-8. Seed your MySQL DB with sample data from this repo:
+
+8. Grant remote access to your MySQL DB instance using your `root` password and then restart the mysql service:
 
 	```
-	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql`
+	$ mysql -u root -p
+	Enter password: <PASSWORD>
+	mysql> GRANT ALL ON *.* to root@'%' IDENTIFIED BY '<PASSWORD>';
+	mysql> flush privileges;
+	mysql> exit
+	$ service mysql restart
+	```
+
+9. Seed your MySQL DB with sample data from this repo:
+
+	```
+	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
 	$ mysql -u root -p -t < db.sql
 	```
 
@@ -97,9 +108,9 @@ Create a secure connection between your Bluemix app and the database running in 
 4. Run the following command given in step 2c, entering your unique Secure Gateway ID:
 
 	```
-	$ sudo docker run -it ibmcom/secure-gateway-client XXX_prod_ng
+	$ sudo docker run -d -it ibmcom/secure-gateway-client XXX_prod_ng
 	```
-	This command downloads a Docker image of the Secure Gateway client and runs it on your VM
+	This command downloads a Docker image of the Secure Gateway client and runs it as a daemon on your VM
 
 ### Phase 3: Deploy the Bluemix App
 Now that we have a connection to our MySQL instance established, we need an application to ingest this data. We will create our own instance of the proivded sample app in this phase, completing the system.
