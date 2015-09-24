@@ -64,10 +64,11 @@ We will use a VM in this demo to represent our enterprise data center. We will h
 	```
 	For reference, here is a [vim commands cheatsheet][vim_cheatsheet_url].
 
-7. Open up port 3306 in the VM firewall
+7. Open up port 3306 in the VM firewall and restart MySQL:
 
 	```
 	$ sudo ufw allow 3306/tcp
+	$ sudo service mysql restart
 	```
 8. Seed your MySQL DB with sample data from this repo:
 
