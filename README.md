@@ -15,11 +15,13 @@ There are several components that need to be set up before being able to give th
 
 ### Overview
 
-Phase 1: Instantiate an OpenStack VM, which is hosting a MySQL DB instance. This will simulate an on-premises data center.
+Phase 1: Instantiate an OpenStack VM, which will simulate an on-premises data center.
 
-Phase 2: Create a Secure Gateway and connect it to the database running in the VM.
+Phase 2: Install a MySQL database instance and seed it with records. This will simulate a data base filled with human resource (HR) data.
 
-Phase 3: Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
+Phase 3: Create a Secure Gateway and connect it to the database running in the VM.
+
+Phase 4: Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
 
 ### Phase 1: Create a Bluemix Virtual Machine (VM)
 
@@ -33,7 +35,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	**Note**: If you do not yet have access to the Bluemix VM beta, complete your request and wait for your confirmation email. This may take up to a few days, so please be patient!
 
-	a) Select the `Ubunto 14.04` image for your VM  
+	a) Select the `Ubuntu 14.04` image for your VM  
 
 	b) Give the VM group any name. We suggest something that identifies it as your "on-premises data center"
 
@@ -47,22 +49,24 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
-    ```
-    $ chmod 700 ./NameOfMyPrivateKeyFile.pem
-    ```
+	```
+	$ chmod 700 ./NameOfMyPrivateKeyFile.pem
+	```
 
 4. Use the ssh command to log into your newly created VM. Make sure to substitute the public IP address of your VM (it should start with 129) for XXX.XX.XXX.XX
 
-	   ```
-     $ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
-     ```
+	```
+	$ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
+	```
 
 5. Resync your VM's package index files from their sources:
 
 	```
 	$ sudo apt-get update
 	```
-	**Note**: You may see a warning in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore it.
+	**Note**: During the next few steps, you may see warnings in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore them.
+
+### Phase 2: Install a MySQL database instance and seed it with records
 
 6. Install MySQL on your VM:
 
@@ -72,13 +76,11 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to keep it handy for the rest of the setup.
 
-7. Comment out the `bind-address` line in your MySQL options file using the vim editor:
+7. Next, you need to comment out the `bind-address` line in your MySQL options file by using the following command:
 
 	```
-	$ sudo vi /etc/mysql/my.cnf
+	$ sudo sed -i -e 's/bind-address/#bind-address/g' /etc/mysql/my.cnf
 	```
-
-    In case your are unfamiliar with vim, here is a [vim commands cheatsheet][vim_cheatsheet_url] for your reference.
 
 8. Open up port 3306 in the VM's firewall:
 
@@ -101,10 +103,10 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	```
 	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
-	$ mysql -u root -p < db.sql
+	$ mysql -u root -p -t < db.sql
 	```
 
-### Phase 2: Create a Secure Gateway Connection
+### Phase 3: Create a Secure Gateway Connection
 Create a secure connection between your Bluemix app and the database running in your VM.
 
 1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click Create.
@@ -128,7 +130,7 @@ Create a secure connection between your Bluemix app and the database running in 
 	```
 	This command downloads a Docker image of the Secure Gateway client and runs it as a daemon on your VM
 
-### Phase 3: Deploy the Bluemix App
+### Phase 4: Deploy the Bluemix App
 Now that we have a connection to our MySQL instance established, we need an application to ingest this data. We will create our own instance of the proivded sample app in this phase, completing the system.
 
 1. Clone the repo, navigate to the app folder, and install the Maven dependencies:
@@ -137,6 +139,7 @@ Now that we have a connection to our MySQL instance established, we need an appl
 	$ git clone https://github.com/IBM-Bluemix/onprem-integration-demo.git
 	$ cd onprem-integration-demo/hr_jpa_ui/
 	```
+
 2. Download and install [Apache Maven][maven_download_url] if you have not already.
 
 3. Build your app .war file using Maven:
@@ -144,21 +147,24 @@ Now that we have a connection to our MySQL instance established, we need an appl
 	```
 	mvn install
 	```
+
 4. Update the `manifest.yml` file with a unique host name for your new app.
 
 5. Download and install the [Cloud Foundry CLI][cloud_foundry_url] tool if you have not already.
 
 6. Connect to Bluemix using the CLI and follow the prompts to log in.
 
-  ```
-  $ cf api https://api.ng.bluemix.net
-  $ cf login
-  ```
+	```
+	$ cf api https://api.ng.bluemix.net
+	$ cf login
+	```
+
 7. Push your app to Bluemix:
 
 	```
 	cf push -p target/vaadin-jpa-application.war
 	```
+
 8. Create a user provided service to broker communication to your MySQL DB:
 
 	```
@@ -172,17 +178,18 @@ Now that we have a connection to our MySQL instance established, we need an appl
 	"password": "password"
 	}'
 	```
-	Now bind the service to your app.
 
-  ```
-  $ cf bind-service <APPNAME> mysql-connect
-  ```
+9. Now bind the service to your app.
 
-9. Finally, we need to restage our app to ensure these env variables changes took effect.
+	```
+	$ cf bind-service <APPNAME> mysql-connect
+	```
 
-  ```
-  $ cf restage <APPNAME>
-  ```
+10. Finally, we need to restage our app to ensure the environment variables changes took effect.
+
+	```
+	$ cf restage <APPNAME>
+	```
 
 ## Decomposition Instructions
 <Instructions on how a developer/architect would take the sample application and extract the relevant code for reuse.>
@@ -197,9 +204,9 @@ Now that we have a connection to our MySQL instance established, we need an appl
 
 The primary source of debugging information for your Bluemix app is the logs. To see them, run the following command using the Cloud Foundry CLI:
 
-  ```
-  $ cf logs <application-name> --recent
-  ```
+```
+$ cf logs <application-name> --recent
+```
 For more detailed information on troubleshooting your application, see the [Troubleshooting section](https://www.ng.bluemix.net/docs/troubleshoot/tr.html) in the Bluemix documentation.
 
 ### Links to more information
