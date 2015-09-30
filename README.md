@@ -101,7 +101,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	```
 	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
-	$ mysql -u root -p -t < db.sql
+	$ mysql -u root -p < db.sql
 	```
 
 ### Phase 2: Create a Secure Gateway Connection
