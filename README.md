@@ -34,48 +34,59 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	**Note**: If you do not yet have access to the Bluemix VM beta, complete your request and wait for your confirmation email. This may take up to a few days, so please be patient!
 
 	a) Select the `Ubunto 14.04` image for your VM  
-	b) Give the VM group any name. We suggest something that identifies it as your "on-premises data center"  
-	c) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU  
+
+	b) Give the VM group any name. We suggest something that identifies it as your "on-premises data center"
+
+	c) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
+
 	d) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
+
 	e) Default to the `private` network  
+
 	f) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
 
-3. Open a terminal and use the ssh command to log into your newly created VM. Make sure:
+3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
-  - to substitute the public IP address of your VM (it should start with 129.) for XXX.XX.XXX.XX
-  - that the private key file resides in the directory you are working in
+    ```
+    $ chmod 700 ./NameOfMyPrivateKeyFile.pem
+    ```
 
-	```
-	$ ssh -i ./NameOfMyPrivateKey.pem ibmcloud@XXX.XX.XXX.XX
-	```
-4. Resync your VM's package index files from their sources:
+4. Use the ssh command to log into your newly created VM. Make sure to substitute the public IP address of your VM (it should start with 129) for XXX.XX.XXX.XX
+
+	   ```
+     $ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
+     ```
+
+5. Resync your VM's package index files from their sources:
 
 	```
 	$ sudo apt-get update
 	```
-	**Note**: You may see a warning in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore these.
+	**Note**: You may see a warning in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore it.
 
-5. Install MySQL on your VM:
+6. Install MySQL on your VM:
 
 	```
 	$ sudo apt-get install mysql-server
 	```
-	Assign a password to your VM and be sure to keep it handy for the rest of the setup.
 
-6. Comment out the `bind-address` line in your MySQL options file using `vim`:
+	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to keep it handy for the rest of the setup.
+
+7. Comment out the `bind-address` line in your MySQL options file using the vim editor:
 
 	```
 	$ sudo vi /etc/mysql/my.cnf
 	```
-	For reference, here is a [vim commands cheatsheet][vim_cheatsheet_url].
 
-7. Open up port 3306 in the VM's firewall:
+    In case your are unfamiliar with vim, here is a [vim commands cheatsheet][vim_cheatsheet_url] for your reference.
+
+8. Open up port 3306 in the VM's firewall:
 
 	```
 	$ sudo ufw allow 3306/tcp
 	```
 
-8. Grant remote access to your MySQL DB instance using your `root` password and then restart the mysql service:
+9. Grant remote access to your MySQL DB instance using your `root` password and then restart the mysql service:
 
 	```
 	$ mysql -u root -p
@@ -86,7 +97,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ service mysql restart
 	```
 
-9. Seed your MySQL DB with sample data from this repo:
+10. Seed your MySQL DB with sample data from this repo:
 
 	```
 	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
