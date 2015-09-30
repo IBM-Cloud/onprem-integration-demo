@@ -11,7 +11,7 @@ By connecting modern cloud applicatons to these on-prem systems, we are able to 
 ![alt tag](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
-There are several components that need to be set up before being able to give this demo. We estimate it will take you **20 minutes** to run through them all. For convenience, we have split the steps up into 3 phases:
+There are several components that need to be set up before being able to give this demo. We estimate it will take you **30 minutes** to run through them all. For convenience, we have split the steps up into 4 phases:
 
 ### Overview
 
@@ -74,7 +74,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ sudo apt-get install mysql-server
 	```
 
-	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to keep it handy for the rest of the setup.
+	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to keep it handy for the rest of the setup (you will need it later in step 4)
 
 7. Next, you need to comment out the `bind-address` line in your MySQL options file by using the following command:
 
@@ -88,7 +88,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ sudo ufw allow 3306/tcp
 	```
 
-9. Grant remote access to your MySQL DB instance using your `root` password and then restart the mysql service:
+9. Grant remote access to your MySQL DB instance (by using the password you assigned in step 1 above) and then restart the mysql service:
 
 	```
 	$ mysql -u root -p
