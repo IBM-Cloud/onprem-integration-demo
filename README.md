@@ -1,49 +1,54 @@
-# on-premises-integration Demo
-This project is a model example of using the public cloud as a System of Engagement to connect back to an existing System of Record. By using a [secure gateway][secure_gateway_docs] connection, our Node.js app on [Bluemix][bluemix_url] is able to utilize data from an on-premises MySQL instance.
+# Integrating a Bluemix app with data residing in an on-premises data center
 
-For many large customers, the core data that drives their business lives in established databases behind their firewall, accessed through classic middleware (i.e. Oracle Database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers of the business require.
+This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a data base that is located in a customers data center. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record) and inside a customers firewall.
 
-Through connecting apps on cloud platforms to these on-prem systems, we are able to quickly create quality user experiences while safely surfacing the data that we need. Read on to find out how anyone can quickly model this entire process using IBM Bluemix.
+We have chosen to implement the Bluemix application in node.js and are using the [secure gateway service][secure_gateway_docs] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
+
+For many large customers, the core data that drives their business resides in established databases behind their firewall, accessed through classic middleware (i.e. Oracle Database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers require.
+
+By connecting modern cloud applicatons to these on-prem systems, we are able to quickly create quality user experiences, while safely surfacing the data that we need. Read on to find out how anyone can quickly do this by using IBM Bluemix.
 
 ![alt tag](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
-There are several components to setting up the system that supports this demo. To get everything set up, we estimate it will take you **XX** minutes. For convenience, we have split everything up into phases:
+There are several components that need to be set up before being able to give this demo. We estimate it will take you **20 minutes** to run through them all. For convenience, we have split the steps up into 3 phases:
 
 ### Overview
 
-1) Instantiate an OpenStack VM - Host a MySQL DB instance to simulate an enterprise data center.
+Phase 1: Instantiate an OpenStack VM, which is hosting a MySQL DB instance. This will simulate an on-premises data center.
 
-2) Create a Secure Gateway -  Connect to the database running in the VM.
+Phase 2: Create a Secure Gateway and connect it to the database running in the VM.
 
-3) Create the app - Push our Vaadin JPA Liberty app to Bluemix and connect it to Secure Gateway endpoint.
+Phase 3: Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
 
-TODO: Watson, weather, APIm, mobile, ...
+### Phase 1: Create a Bluemix Virtual Machine (VM)
 
-### Phase 1: Create a Bluemix VM
-We will use a VM in this demo to represent our enterprise data center. We will host a MySQL instance in this "data center" and use it as our application's system of record.
+We will use a VM in this demo to represent our on-premises data center and will host a MySQL instance in it. This represents our "System of Record".
 
 1. Create a Bluemix Account
 
     [Sign up for Bluemix][bluemix_signup_url] or use an existing account.
-    
-2. Create a VM from the console dashboard.
+
+2. Create a VM from the console dashboard by clicking on "Run Virtual Machines"
 
 	**Note**: If you do not yet have access to the Bluemix VM beta, complete your request and wait for your confirmation email. This may take up to a few days, so please be patient!
 
 	a) Select the `Ubunto 14.04` image for your VM  
-	b) Give the VM group any name. We suggest something that identifies it as your "enterprise data center"  
+	b) Give the VM group any name. We suggest something that identifies it as your "on-premises data center"  
 	c) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU  
 	d) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
 	e) Default to the `private` network  
-	f) Click Create to launch your VM. Once it has started, take not of your public IP address on the VM dashboard
+	f) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
 
-3. SSH into your new VM using the following command, using your private key filename and public IP address:
+3. Open a terminal and use the ssh command to log into your newly created VM. Make sure:
+
+  - to substitute the public IP address of your VM (it should start with 129.) for XXX.XX.XXX.XX
+  - that the private key file resides in the directory you are working in
 
 	```
-	$ ssh -i ./testkey.pem ibmcloud@XXX.XX.XXX.XX
+	$ ssh -i ./NameOfMyPrivateKey.pem ibmcloud@XXX.XX.XXX.XX
 	```
-4. Resynch your VM's package index files from their sources:
+4. Resync your VM's package index files from their sources:
 
 	```
 	$ sudo apt-get update
@@ -56,7 +61,7 @@ We will use a VM in this demo to represent our enterprise data center. We will h
 	$ sudo apt-get install mysql-server
 	```
 	Assign a password to your VM and be sure to keep it handy for the rest of the setup.
-	
+
 6. Comment out the `bind-address` line in your MySQL options file using `vim`:
 
 	```
@@ -167,7 +172,7 @@ Now that we have a connection to our MySQL instance established, we need an appl
   ```
   $ cf restage <APPNAME>
   ```
- 
+
 ## Decomposition Instructions
 <Instructions on how a developer/architect would take the sample application and extract the relevant code for reuse.>
 
