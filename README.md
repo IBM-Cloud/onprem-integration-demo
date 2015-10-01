@@ -11,17 +11,21 @@ By connecting modern cloud applicatons to these on-prem systems, we are able to 
 ![alt tag](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
-There are several components that need to be set up before being able to give this demo. We estimate it will take you **30 minutes** to run through them all. For convenience, we have split the steps up into 4 phases:
+There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our cloud application will connect to. We estimate it will take you **30 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
+
+**Important Note**: During the following steps, you may see frequent warnings in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore them.
+
+For convenience, we have split the steps up into 4 phases:
 
 ### Overview
 
-Phase 1: Instantiate an OpenStack VM, which will simulate an on-premises data center.
+**Phase 1:** Instantiate an OpenStack VM, which will simulate an on-premises data center.
 
-Phase 2: Install a MySQL database instance and seed it with records. This will simulate a data base filled with human resource (HR) data.
+**Phase 2:** Install a MySQL database instance and seed it with records. This will simulate a data base filled with human resource (HR) data.
 
-Phase 3: Create a Secure Gateway and connect it to the database running in the VM.
+**Phase 3:** Create a Secure Gateway and connect it to the database running in the VM.
 
-Phase 4: Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
+**Phase 4:** Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
 
 ### Phase 1: Create a Bluemix Virtual Machine (VM)
 
@@ -64,7 +68,6 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	```
 	$ sudo apt-get update
 	```
-	**Note**: During the next few steps, you may see warnings in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore them.
 
 ### Phase 2: Install a MySQL database instance and seed it with records
 
@@ -115,11 +118,11 @@ Create a secure connection between your Bluemix app and the database running in 
 
 1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click Create.
 
-2. Add a new gateway in the service console
+2. In the secure gateway console choose `Add Gateway` and:
 
-	a) Give your gateway a name and choose to add a destination  
+	a) Give your gateway a name and click on `Add Destinations`  
 	b) Give the destination a name, your VM's public IP, port 3306, keep TCP selected, and click the `+` button
-	c) Click 'Connect It' to retrieve the command you will need to establish the secure connection from your VM
+	c) Click `Connect It` to retrieve the command you will need to establish the secure connection from your VM
 
 3. SSH back into your VM and install Docker
 
@@ -127,12 +130,18 @@ Create a secure connection between your Bluemix app and the database running in 
 	$ sudo apt-get install curl
 	$ curl -sSL https://get.docker.com/ | sh
 	```
+
 4. Run the following command given in step 2c, entering your unique Secure Gateway ID:
 
 	```
 	$ sudo docker run -d -it ibmcom/secure-gateway-client XXX_prod_ng
 	```
+
 	This command downloads a Docker image of the Secure Gateway client and runs it as a daemon on your VM
+
+5. The Secure Gateway should now be connected, which can be checkd in the secure gateway console:
+
+![Secure Gateway is connected](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/gateway-connected.jpg)
 
 ### Phase 4: Deploy the Bluemix App
 Now that we have a connection to our MySQL instance established, we need an application to ingest this data. We will create our own instance of the proivded sample app in this phase, completing the system.
