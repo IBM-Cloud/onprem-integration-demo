@@ -8,7 +8,7 @@ For many large customers, the core data that drives their business resides in es
 
 By connecting modern cloud applicatons to these on-prem systems, we are able to quickly create quality user experiences, while safely surfacing the data that we need. Read on to find out how anyone can quickly do this by using IBM Bluemix.
 
-![alt tag](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
+![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
 There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our cloud application will connect to. We estimate it will take you **30 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
@@ -19,7 +19,7 @@ For convenience, we have split the steps up into 4 phases:
 
 ### Overview
 
-**Phase 1:** Instantiate an OpenStack VM, which will simulate an on-premises data center.
+**Phase 1:** Instantiate an OpenStack virtual machine (VM), which will simulate an on-premises data center.
 
 **Phase 2:** Install a MySQL database instance and seed it with records. This will simulate a data base filled with human resource (HR) data.
 
@@ -110,6 +110,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	```
 	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
+
 	$ mysql -u root -p -t < db.sql
 	```
 
@@ -128,6 +129,7 @@ Create a secure connection between your Bluemix app and the database running in 
 
 	```
 	$ sudo apt-get install curl
+
 	$ curl -sSL https://get.docker.com/ | sh
 	```
 
