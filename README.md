@@ -74,7 +74,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ sudo apt-get install mysql-server
 	```
 
-	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to keep it handy for the rest of the setup (you will need it later in step 4)
+	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to write it down, you will need it for the rest of the setup (specifically in step 4 below).
 
 7. Next, you need to comment out the `bind-address` line in your MySQL options file by using the following command:
 
@@ -92,10 +92,14 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	```
 	$ mysql -u root -p
-	Enter password: <PASSWORD>
-	mysql> GRANT ALL ON *.* to root@'%' IDENTIFIED BY '<PASSWORD>';
+	Enter password: <PasswordFromStep1>
+
+	mysql> GRANT ALL ON *.* to root@'%' IDENTIFIED BY '<PasswordFromStep1>';
+
 	mysql> flush privileges;
+
 	mysql> exit
+
 	$ service mysql restart
 	```
 
