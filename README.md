@@ -146,9 +146,15 @@ Create a secure connection between your Bluemix app and the database running in 
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/gateway-connected.jpg)
 
 ### Phase 4: Deploy the Bluemix App
-Now that we have a connection to our MySQL instance established, we need an application to ingest and display the data. We will create our own instance of the provided sample app in this phase, completing the system.
+Now that we have a connection to our MySQL data base (serving as a stand-in for our on-premises SoR) established, we will turn to our System-of-Engagment application. It will ingest (through the secure gateway) and then display the data.
 
-1. Clone the repo, navigate to the app folder, and install the Maven dependencies:
+The have chosen a modern web application, written in Java and making use of the Vaadin user interface library.
+
+As a prerequisite, you need Java to be installed on your local machine. If you have not done so, follow [these instructions][java_install_url].
+
+To clone, build and deploy the app on Bluemix, follow these steps:
+
+1. Clone the  github code repository, navigate to the app folder, and install the Maven dependencies:
 
 	```
 	$ git clone https://github.com/IBM-Bluemix/onprem-integration-demo.git
@@ -156,7 +162,7 @@ Now that we have a connection to our MySQL instance established, we need an appl
 	$ cd onprem-integration-demo/hr_jpa_ui/
 	```
 
-2. Download and install [Apache Maven][maven_download_url] if you have not already.
+2. We will use [Apache Maven][maven_home_url] as our build tool for Java. If you have not done so already, you need to [download][maven_download_url] and [install it][maven_install_url].
 
 3. Build your app .war file using Maven:
 
@@ -164,7 +170,7 @@ Now that we have a connection to our MySQL instance established, we need an appl
 	mvn install
 	```
 
-4. Update the `manifest.yml` file with a unique host name for your new app.
+4. Update the `manifest.yml` file with a unique host name for your new app (which we will refer to as APPNAME in the remaining steps).
 
 5. Download and install the [Cloud Foundry CLI][cloud_foundry_url] tool if you have not already.
 
@@ -232,7 +238,10 @@ For more detailed information on troubleshooting your application, see the [Trou
 
 [bluemix_url]: https://console.ng.bluemix.net/?cm_mmc=Display-SampleApp-_-BluemixSampleApp-CapitalWeather-_-Node-WeatherChannel-_-BM-DevAd
 [bluemix_signup_url]: https://ibm.biz/on-prem-integration-signup
+[java_install_url]: https://www.java.com/en/download/help/index_installing.xml
+[maven_home_url]: https://maven.apache.org/index.html
 [maven_download_url]: https://maven.apache.org/download.cgi
+[maven_install_url]: https://maven.apache.org/install.html
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 [secure_gateway_docs]: https://www.ng.bluemix.net/docs/#services/SecureGateway/index.html
 [vm_ssh_key_docs]: https://www.ng.bluemix.net/docs/virtualmachines/vm_index.html#vm_ssh_key
