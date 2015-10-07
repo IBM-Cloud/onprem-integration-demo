@@ -41,15 +41,17 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	a) Select the `Ubuntu 14.04` image for your VM  
 
-	b) Give the VM group any name. We suggest something that identifies it as your "on-premises data center"
+	b) Give the VM group a name. We suggest something that identifies it as your "on-premises data center". Alphanumeric or "_-." characters are allowed but no spaces.
 
 	c) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
 
 	d) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
 
 	e) Default to the `private` network  
+	
+	f) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
 
-	f) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
+	g) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
 
 3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
