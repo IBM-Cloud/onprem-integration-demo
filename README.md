@@ -4,9 +4,9 @@ This project shows how a modern web application (running on [Bluemix](https://ww
 
 We have chosen to implement the Bluemix application in node.js and are using the [secure gateway service][secure_gateway_docs] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
 
-For many large customers, the core data that drives their business resides in established databases behind their firewall, accessed through classic middleware (i.e. Oracle Database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers require.
+For many large customers, the core data that drives their business resides in established database systems behind their firewall, accessed through classic middleware (i.e., an Oracle or DB2 database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers require.
 
-By connecting modern cloud applicatons to these on-prem systems, we are able to quickly create quality user experiences, while safely surfacing the data that we need. Read on to find out how anyone can quickly do this by using IBM Bluemix.
+By connecting modern cloud applications to these on-prem systems, we are able to quickly create quality user experiences, while safely surfacing the data that we need. Read on to find out how anyone can quickly do this by using IBM Bluemix.
 
 ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
@@ -21,11 +21,11 @@ For convenience, we have split the steps up into 4 phases:
 
 **Phase 1:** Instantiate an OpenStack virtual machine (VM), which will simulate an on-premises data center.
 
-**Phase 2:** Install a MySQL database instance and seed it with records. This will simulate a data base filled with human resource (HR) data.
+**Phase 2:** Install a MySQL database instance and seed it with records. This will simulate a database filled with human resource (HR) data.
 
 **Phase 3:** Create a Secure Gateway and connect it to the database running in the VM.
 
-**Phase 4:** Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix then connect it to the Secure Gateway endpoint.
+**Phase 4:** Create the app (based on [Vaadin] (https://vaadin.com/home) and JPA [Liberty] (https://en.wikipedia.org/wiki/IBM_WebSphere_Application_Server)), deploy it to Bluemix, then connect it to the Secure Gateway endpoint.
 
 ### Phase 1: Create a Bluemix Virtual Machine (VM)
 
