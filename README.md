@@ -48,26 +48,26 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	d) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
 
 	e) Default to the `private` network  
-	
+
 	f) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
 
 	g) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
 
 3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
-	```
+	```sh
 	$ chmod 700 ./NameOfMyPrivateKeyFile.pem
 	```
 
 4. Use the ssh command to log into your newly created VM. Make sure to substitute the public IP address of your VM (it should start with 129) for XXX.XX.XXX.XX
 
-	```
+	```sh
 	$ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
 	```
 
 5. Resync your VM's package index files from their sources:
 
-	```
+	```sh
 	$ sudo apt-get update
 	```
 
@@ -75,7 +75,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 6. Install MySQL on your VM:
 
-	```
+	```sh
 	$ sudo apt-get install mysql-server
 	```
 
@@ -100,13 +100,11 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	Enter password: <PasswordFromStep1>
 
 	mysql> GRANT ALL ON *.* to root@'%' IDENTIFIED BY '<PasswordFromStep1>';
-
 	mysql> flush privileges;
-
 	mysql> exit
 
 	$ service mysql restart
-	```
+```
 
 10. Seed your MySQL DB with sample data from this repo:
 
