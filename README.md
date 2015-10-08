@@ -51,7 +51,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	f) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
 
-	g) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard
+	g) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard. The IP address is needed during some steps later on.
 
 3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
