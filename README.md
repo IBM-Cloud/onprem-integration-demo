@@ -236,15 +236,27 @@ For more detailed information on troubleshooting your application, see the [Trou
 
 [IBM Redbook: Secure Cloud-to-Mainframe Connectivity with IBM Bluemix][cloud_mainframe_redbook_url]
 
+
 [bluemix_url]: https://console.ng.bluemix.net/?cm_mmc=Display-SampleApp-_-BluemixSampleApp-CapitalWeather-_-Node-WeatherChannel-_-BM-DevAd
+
 [bluemix_signup_url]: https://ibm.biz/on-prem-integration-signup
+
 [java_install_url]: https://www.java.com/en/download/help/index_installing.xml
+
 [maven_home_url]: https://maven.apache.org/index.html
+
 [maven_download_url]: https://maven.apache.org/download.cgi
+
 [maven_install_url]: https://maven.apache.org/install.html
+
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
+
 [secure_gateway_docs]: https://www.ng.bluemix.net/docs/#services/SecureGateway/index.html
+
 [vm_ssh_key_docs]: https://www.ng.bluemix.net/docs/virtualmachines/vm_index.html#vm_ssh_key
+
 [vim_cheatsheet_url]: http://www.fprintf.net/vimCheatSheet.html
+
 [secure_gateway_catalog_url]: https://console.ng.bluemix.net/catalog/secure-gateway/
+
 [cloud_mainframe_redbook_url]: http://www.redbooks.ibm.com/redpapers/pdfs/redp5243.pdf
