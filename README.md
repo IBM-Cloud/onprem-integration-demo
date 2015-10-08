@@ -103,7 +103,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	mysql> flush privileges;
 	mysql> exit
 
-	$ service mysql restart
+	$ sudo service mysql restart
 	```
 
 10. Seed your MySQL DB with sample data from this repo:
