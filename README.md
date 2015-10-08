@@ -2,7 +2,7 @@
 
 This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a data base that is located in a customers data center. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record) and inside a customers firewall.
 
-We have chosen to implement the Bluemix application in node.js and are using the [secure gateway service][secure_gateway_docs] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
+We have chosen to implement the Bluemix application in node.js and are using the [secure gateway service][secure_gateway_docs_url] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
 
 For many large customers, the core data that drives their business resides in established database systems behind their firewall, accessed through classic middleware (i.e., an Oracle or DB2 database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers require.
 
@@ -104,7 +104,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	mysql> exit
 
 	$ service mysql restart
-```
+	```
 
 10. Seed your MySQL DB with sample data from this repo:
 
@@ -251,7 +251,7 @@ For more detailed information on troubleshooting your application, see the [Trou
 
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 
-[secure_gateway_docs]: https://www.ng.bluemix.net/docs/#services/SecureGateway/index.html
+[secure_gateway_docs_url]: https://www.ng.bluemix.net/docs/#services/SecureGateway/index.html
 
 [vm_ssh_key_docs]: https://www.ng.bluemix.net/docs/virtualmachines/vm_index.html#vm_ssh_key
 
