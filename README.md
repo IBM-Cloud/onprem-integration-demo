@@ -191,17 +191,17 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 8. Create a user provided service to broker communication to your MySQL DB:
 
 	```
-	cf cups mysql-connect -p '{
-	"jdbcUrl": "jdbc:mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees",
-	"uri": "mysql://cap-sg-prd-3.integration.ibmcloud.com:15302/employees?reconnect=true",
+	cf cups mysql-mine -p '{
+	"jdbcUrl": "jdbc:mysql://cap-sg-prd-y.integration.ibmcloud.com:xxxxx/employees",
+	"uri": "mysql://cap-sg-prd-y.integration.ibmcloud.com:xxxxx/employees?reconnect=true",
 	"name": "employees",
-	"hostname": "cap-sg-prd-3.integration.ibmcloud.com",
-	"port": "15302",
+	"hostname": "cap-sg-prd-y.integration.ibmcloud.com",
+	"port": "xxxxx",
 	"user": "root",
 	"password": "password"
 	}'
 	```
-	The host name as part of the jdbcUrl, uri, and hostname values can be obtained from the Secure Gateway
+	The port number and the exact hostname can be obtained from the Secure Gateway
 	dashboard by clicking on the "i" (info) icon as shown: 
 	
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/BluemixSecureGateway_CloudHost.png)
