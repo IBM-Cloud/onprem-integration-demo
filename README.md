@@ -201,7 +201,11 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 	"password": "password"
 	}'
 	```
-
+	The host name as part of the jdbcUrl, uri, and hostname values can be obtained from the Secure Gateway
+	dashboard by clicking on the "i" (info) icon as shown: 
+	
+	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/BluemixSecureGateway_CloudHost.png)
+	
 9. Now bind the service to your app.
 
 	```
