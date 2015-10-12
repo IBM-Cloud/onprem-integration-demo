@@ -4,9 +4,7 @@ This is **work in progress** and not all steps and/or technical details are full
 
 ## Preparation before the demo
 
-#### Create a VM, install the MySQL data base, create a secure gateway and connect it to the data base
-
-Follw the detailed instruction in the [README.md file] (/README.md). Specifically all steps in phases 1, 2 and 3.
+Follow the detailed instruction in the [README.md file] (/README.md). Specifically **all steps in phases 1, 2 and 3**.
 
 
 
