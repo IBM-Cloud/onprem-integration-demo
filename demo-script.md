@@ -2,31 +2,15 @@
 
 This is **work in progress** and not all steps and/or technical details are fully thought out or implemented yet.
 
-Contact (for now):
-
-Uwe Fassnacht (Bluemix Product Manager):
-<uwe.fassnacht@de.ibm.com>
-
-
 ## Preparation before the demo
 
-#### Deploy the demo app into your Bluemix account
+#### Create a VM, install the MySQL data base, create a secure gateway and connect it to the data base
 
-Use the "Deploy to Bluemix" button (found in the Readme.MD) file to deploy the web application into your Bluemix account. To do that, you will need:
+Follw the detailed instruction in the [README.md file] (/README.md). Specifically all steps in phases 1, 2 and 3.
 
-- A Bluemix account (if you don't already have one, sign up for a free trial account [here](https://console.ng.bluemix.net/registration))
-- A modern web browser
 
-After a succesful deploy, make sure you can access the running application through your web browser.
 
-#### Test the connectivity to the secure gateway
-
-To make sure no network issues stand between you and the gateway, you can test connectivity to it by:
-
-- ...
-- ...
-
-## Sequence of Steps
+## Sequence of Steps while giving them demo
 
 ### 1. Set the stage
 
