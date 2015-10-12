@@ -202,14 +202,14 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 	}'
 	```
 	The port number and the exact hostname can be obtained from the Secure Gateway
-	dashboard by clicking on the "i" (info) icon as shown: 
-	
+	dashboard by clicking on the "i" (info) icon as shown:
+
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/BluemixSecureGateway_CloudHost.png)
-	
+
 9. Now bind the service to your app.
 
 	```
-	$ cf bind-service <APPNAME> mysql-connect
+	$ cf bind-service <APPNAME> mysql-mine
 	```
 
 10. Finally, we need to restage our app to ensure the environment variables changes took effect.
