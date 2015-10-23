@@ -85,19 +85,13 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to write it down, you will need it for the rest of the setup (specifically in step 4 below).
 
-7. Next, you need to comment out the `bind-address` line in your MySQL options file by using the following command:
-
-	```
-	$ sudo sed -i -e 's/bind-address/#bind-address/g' /etc/mysql/my.cnf
-	```
-
-8. Open up port 3306 in the VM's firewall:
+7. Open up port 3306 in the VM's firewall. It is used by MySQL to listen for incoming requests:
 
 	```
 	$ sudo ufw allow 3306/tcp
 	```
 
-9. Grant remote access to your MySQL DB instance (by using the password you assigned in step 1 above) and then restart the mysql service:
+8. Grant remote access to your MySQL DB instance (by using the password you assigned in step 1 above) and then restart the mysql service:
 
 	```
 	$ mysql -u root -p
@@ -110,7 +104,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ sudo service mysql restart
 	```
 
-10. Seed your MySQL DB with sample data from this repo:
+9. Seed your MySQL DB with sample data from this repo:
 
 	```
 	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql
@@ -121,47 +115,47 @@ We will use a VM in this demo to represent our on-premises data center and will 
 ### Phase 3: Create a Secure Gateway Connection
 Create a secure connection between your Bluemix app and the database running in your VM.
 
-1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click CREATE.
+1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click `CREATE`.
 
 2. In the secure gateway console choose `ADD GATEWAY` and:
 
 	a) Give your gateway a name, toggle "Enforce security token on client" so that it is not active, and then click on `ADD DESTINATION`  
-	b) Give the destination a name, your VM's public IP address from above, port 3306, keep TCP selected, and click the `+` button
+	b) Give the destination a name, enter "127.0.0.1" as IP address, port 3306, keep TCP selected, and click the `+` button. The loopback ip address (127.0.0.1) is used because the Secure Gateway client connects to the MySQL server locally.
+	
 	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM. There are options for the native installer (IBM Installer), running a docker image or using IBM DataPower.
 	Select "IBM Installer", the screen should look as shown. Note down the Gateway ID. It is needed in step 3b. ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/sg-native-installer.png)
 
 
-3. Install the Secure Gateway client
+3. Install the Secure Gateway client using the native installer
 
-	*Option 1: Use the native installer*
 	a) Download the native installer using "wget". The file name needs to match the one shown in step 2c.
 	```
 	$ wget https://sgmanager.ng.bluemix.net/installers/ibm-securegateway-client-1.3.1+client_amd64.deb
 	```
-	b) Install and configure the Secure Gateway using the native installer.
+	b) Create an Access Control List (ACL) to allow access to the tcp port used by MySQL. The following creates the file "sgacl.conf" and populates it with the rule "acl allow :3306" - allow access to port 3306.
+	```
+	$ sudo bash -c 'echo "acl allow :3306" > /etc/ibm/sgacl.conf' 
+
+	```
+	c) Install and configure the Secure Gateway using the native installer.
 	```
 	$ sudo dpkg -i ibm-securegateway-client-1.3.1+client_amd64.deb
 	```
-	During the install process you are prompted several times. First you are asked for automatic start and restart. Quickly press "y". Next you are prompted for the Gateway ID, enter the id obtained in step 2c. For all other prompts you can just hit enter. The Secure Gateway client should be automatically started at the end of the install process.
-
-
-	*Option 2: Use the Docker-based client*
-	a) SSH back into your VM and install Docker
+	During the install process you are prompted several times for input.
+	* For "Stop and restart the client..." type in "y".
+	* When prompted for the "gateway ID", enter the id obtained in step 2c above.
+	* When asked to "supply an ACL File", specify "/etc/ibm/sgacl.conf" - the file created above.
+	* You can just hit enter and go with the defaults for everythin else.
+	Once the install process is finished, the Secure Gateway client should start automatically.
+	
+	d) Verify the Secure Gateway client is connected
+	```
+	$ cat /var/log/securegateway/client_console.log 
 
 	```
-	$ sudo apt-get install curl
-
-	$ curl -sSL https://get.docker.com/ | sh
-	```
-	b) Run the following command given in step 2c, entering your unique Secure Gateway ID:
-
-	```
-	$ sudo docker run -d -it ibmcom/secure-gateway-client XXX_prod_ng
-	```
-
-	This command downloads a Docker image of the Secure Gateway client and runs it as a daemon on your VM
-
-4. The Secure Gateway should now be connected, which can be checked in the secure gateway console:
+	The output should indicate that "The Secure Gateway tunnel is connected".
+	
+4. The Bluemix dashboard should also indicate that the Secure Gateway is now connected. It can be checked in the secure gateway console:
 
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/gateway-connected.jpg)
 
