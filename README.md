@@ -125,19 +125,35 @@ Create a secure connection between your Bluemix app and the database running in 
 
 2. In the secure gateway console choose `ADD GATEWAY` and:
 
-	a) Give your gateway a name, leave the settings for the  and click on `ADD DESTINATION`  
-	b) Give the destination a name, your VM's public IP, port 3306, keep TCP selected, and click the `+` button
-	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM
+	a) Give your gateway a name, toggle "Enforce security token on client" so that it is not active, and then click on `ADD DESTINATION`  
+	b) Give the destination a name, your VM's public IP address from above, port 3306, keep TCP selected, and click the `+` button
+	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM. There are options for the native installer (IBM Installer), running a docker image or using IBM DataPower.
+	Select "IBM Installer", the screen should look as shown. Note down the Gateway ID. It is needed in step 3b. ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/sg-native-installer.png)
 
-3. SSH back into your VM and install Docker
+
+3. Install the Secure Gateway client
+
+	*Option 1: Use the native installer*
+	a) Download the native installer using "wget". The file name needs to match the one shown in step 2c.
+	```
+	$ wget https://sgmanager.ng.bluemix.net/installers/ibm-securegateway-client-1.3.1+client_amd64.deb
+	```
+	b) Install and configure the Secure Gateway using the native installer.
+	```
+	$ sudo dpkg -i ibm-securegateway-client-1.3.1+client_amd64.deb
+	```
+	During the install process you are prompted several times. First you are asked for automatic start and restart. Quickly press "y". Next you are prompted for the Gateway ID, enter the id obtained in step 2c. For all other prompts you can just hit enter. The Secure Gateway client should be automatically started at the end of the install process.
+
+
+	*Option 2: Use the Docker-based client*
+	a) SSH back into your VM and install Docker
 
 	```
 	$ sudo apt-get install curl
 
 	$ curl -sSL https://get.docker.com/ | sh
 	```
-
-4. Run the following command given in step 2c, entering your unique Secure Gateway ID:
+	b) Run the following command given in step 2c, entering your unique Secure Gateway ID:
 
 	```
 	$ sudo docker run -d -it ibmcom/secure-gateway-client XXX_prod_ng
@@ -145,7 +161,7 @@ Create a secure connection between your Bluemix app and the database running in 
 
 	This command downloads a Docker image of the Secure Gateway client and runs it as a daemon on your VM
 
-5. The Secure Gateway should now be connected, which can be checked in the secure gateway console:
+4. The Secure Gateway should now be connected, which can be checked in the secure gateway console:
 
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/gateway-connected.jpg)
 
