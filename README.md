@@ -191,15 +191,13 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 6. Connect to Bluemix using the CLI and follow the prompts to log in.
 
 	```
-	$ cf api https://api.ng.bluemix.net
-
-	$ cf login
+	$ cf login -a https://api.ng.bluemix.net
 	```
 
 7. Push your app to Bluemix:
 
 	```
-	cf push -p target/vaadin-jpa-application.war
+	cf push <APPNAME> -p target/vaadin-jpa-application.war
 	```
 
 8. Create a user provided service to broker communication to your MySQL DB:
@@ -246,7 +244,7 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 The primary source of debugging information for your Bluemix app is the logs. To see them, run the following command using the Cloud Foundry CLI:
 
 ```
-$ cf logs <application-name> --recent
+$ cf logs <APPNAME> --recent
 ```
 For more detailed information on troubleshooting your application, see the [Troubleshooting section](https://www.ng.bluemix.net/docs/troubleshoot/tr.html) in the Bluemix documentation.
 
