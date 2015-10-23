@@ -83,7 +83,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ sudo apt-get install mysql-server
 	```
 
-	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to write it down, you will need it for the rest of the setup (specifically in step 4 below).
+	**Note**: During the installation process you will be asked to assign a password to your MySQL server. Make sure to write it down, you will need it for database access.
 
 7. Open up port 3306 in the VM's firewall. It is used by MySQL to listen for incoming requests:
 
@@ -213,8 +213,7 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 	"password": "password"
 	}'
 	```
-	The port number and the exact hostname can be obtained from the Secure Gateway
-	dashboard by clicking on the "i" (info) icon as shown:
+	The "password" is the administrator password you chose during the MySQL setup. The port number and the exact hostname can be obtained from the Secure Gateway dashboard by clicking on the "i" (info) icon as shown:
 
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/BluemixSecureGateway_CloudHost.png)
 
