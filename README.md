@@ -113,7 +113,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 10. Seed your MySQL DB with sample data from this repo:
 
 	```
-	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql?token=AFP396gx7396eE_EhAt0ap-J6vKnvuJcks5WCUYGwA%3D%3D > db.sql
+	$ wget https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/db.sql
 
 	$ mysql -u root -p -t < db.sql
 	```
@@ -121,13 +121,13 @@ We will use a VM in this demo to represent our on-premises data center and will 
 ### Phase 3: Create a Secure Gateway Connection
 Create a secure connection between your Bluemix app and the database running in your VM.
 
-1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click Create.
+1. Navigate to the Bluemix catalog and select the new [Secure Gateway service][secure_gateway_catalog_url]. Choose `Leave Unbound` for now and click CREATE.
 
-2. In the secure gateway console choose `Add Gateway` and:
+2. In the secure gateway console choose `ADD GATEWAY` and:
 
-	a) Give your gateway a name and click on `Add Destinations`  
+	a) Give your gateway a name, leave the settings for the  and click on `ADD DESTINATION`  
 	b) Give the destination a name, your VM's public IP, port 3306, keep TCP selected, and click the `+` button
-	c) Click `Connect It` to retrieve the command you will need to establish the secure connection from your VM
+	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM
 
 3. SSH back into your VM and install Docker
 
