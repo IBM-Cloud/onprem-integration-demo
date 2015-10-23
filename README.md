@@ -11,7 +11,7 @@ By connecting modern cloud applications to these on-prem systems, we are able to
 ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
-There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our cloud application will connect to. We estimate it will take you **30 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
+There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our cloud application will connect to. We estimate it will take you **45 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
 
 **Important Note**: During the following steps, you may see frequent warnings in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore them.
 
@@ -43,15 +43,17 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	b) Give the VM group a name. We suggest something that identifies it as your "on-premises data center". Alphanumeric or "_-." characters are allowed but no spaces.
 
-	c) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
+	c) Select "SINGLE" as type.
 
-	d) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
+	d) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
 
-	e) Default to the `private` network  
+	e) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
 
-	f) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
+	f) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
 
-	g) Click `Create` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard. The IP address is needed during some steps later on.
+	g) Default to the `private` network  
+
+	h) Click `CREATE` to create and launch your VM. Once it has started, take note of your public IP address on the VM dashboard. The IP address is needed during some steps later on.
 
 3. Open a terminal and make sure that your private key file is in your working directory. It needs to have the correct permissions, to set them use the command:
 
@@ -59,11 +61,13 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	$ chmod 700 ./NameOfMyPrivateKeyFile.pem
 	```
 
-4. Use the ssh command to log into your newly created VM. Make sure to substitute the public IP address of your VM (it should start with 129) for XXX.XX.XXX.XX
+4. Use the ssh command to log into your newly created VM. Make sure to substitute the public IP address of your VM (it should start with 129) for XXX.XX.XXX.XX.
 
 	```sh
 	$ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
 	```
+	
+	If you receive a "No route to host" error, it is an indicator that the network fabric has not yet completed the setup. Wait a minute or two and retry.
 
 5. Resync your VM's package index files from their sources:
 
