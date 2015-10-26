@@ -35,7 +35,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
     [Sign up for Bluemix][bluemix_signup_url] or use an existing account.
 
-2. Create a VM from the console dashboard by clicking on "Run Virtual Machines"
+2. Create a VM from the console dashboard by clicking on `Run Virtual Machines`
 
 	**Note**: If you do not yet have access to the Bluemix VM beta, complete your request and wait for your confirmation email. This may take up to a few days, so please be patient!
 
@@ -43,7 +43,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	b) Give the VM group a name. We suggest something that identifies it as your "on-premises data center". Alphanumeric or "_-." characters are allowed but no spaces.
 
-	c) Select "SINGLE" as type.
+	c) Select `SINGLE` as type.
 
 	d) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
 
@@ -119,20 +119,20 @@ Create a secure connection between your Bluemix app and the database running in 
 
 2. In the secure gateway console choose `ADD GATEWAY` and:
 
-	a) Give your gateway a name, toggle "Enforce security token on client" so that it is not active, and then click on `ADD DESTINATION`  
-	b) Give the destination a name, enter "127.0.0.1" as IP address, port 3306, keep TCP selected, and click the `+` button. The loopback ip address (127.0.0.1) is used because the Secure Gateway client connects to the MySQL server locally.
+	a) Give your gateway a name, toggle `Enforce security token on client` so that it is not active, and then click on `ADD DESTINATION`  
+	b) Give the destination a name, enter `127.0.0.1` as IP address, port 3306, keep TCP selected, and click the `+` button. The loopback ip address (127.0.0.1) is used because the Secure Gateway client connects to the MySQL server locally.
 	
 	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM. There are options for the native installer (IBM Installer), running a docker image or using IBM DataPower.
-	Select "IBM Installer", the screen should look as shown. Note down the Gateway ID. It is needed in step 3b. ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/sg-native-installer.png)
+	Select `IBM Installer`, the screen should look as shown. Note down the Gateway ID. It is needed in step 3b. ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/sg-native-installer.png)
 
 
 3. Install the Secure Gateway client into your VM using the native installer
 
-	a) Within the terminal of your VM download the native installer using "wget". The file name needs to match the one shown in step 2c.
+	a) Within the terminal of your VM download the native installer using the `wget` command. The file name needs to match the one shown in step 2c.
 	```
 	$ wget https://sgmanager.ng.bluemix.net/installers/ibm-securegateway-client-1.3.1+client_amd64.deb
 	```
-	b) Create an Access Control List (ACL) to allow access to the tcp port used by MySQL. The following first creates the needed directory, then the file "sgacl.conf" and populates it with the rule "acl allow :3306" - allow access to port 3306.
+	b) Create an Access Control List (ACL) to allow access to the tcp port used by MySQL. The following first creates the needed directory, then the file "sgacl.conf" and populates it with the rule `acl allow :3306` - allow access to port 3306.
 	```
 	$ sudo mkdir /etc/ibm
 	
