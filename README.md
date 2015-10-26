@@ -47,7 +47,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 
 	d) Select the `m1.small` size, equivalent to 1.5 GB memory and 1 CPU
 
-	e) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix
+	e) Toggle `Assign pubic IP address` to make the VM accessible from outside Bluemix. Note that this public IP address is needed only to administrate the VM directly from your computer.
 
 	f) Create an SSH key for securely connecting to your VM. For instructions on how to do this, check out the [documentation][vm_ssh_key_docs]  
 
