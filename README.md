@@ -231,13 +231,8 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 	$ cf restage <APPNAME>
 	```
 
-## Decomposition Instructions
-<Instructions on how a developer/architect would take the sample application and extract the relevant code for reuse.>
-
-## API documentation
-<If one or more of the apps in the demo exposes an API, provide a short explanation and how it is used in the sample. Link out to the published REST API documentation.>
-
 ## Contribute
+
 We are more than happy to accept external contributions to this project, be it in the form of issues and pull requests. If you find a bug, please report it via the [Issues section][issues_url] or even better, fork the project and submit a pull request with your fix! Pull requests will be evaulated on an individual basis based on value add to the sample application.
 
 ## Troubleshooting
