@@ -66,7 +66,7 @@ We will use a VM in this demo to represent our on-premises data center and will 
 	```sh
 	$ ssh -i ./NameOfMyPrivateKeyFile.pem ibmcloud@XXX.XX.XXX.XX
 	```
-	
+
 	If you receive a "No route to host" error, it is an indicator that the network fabric has not yet completed the setup. Wait a minute or two and retry.
 
 5. Resync your VM's package index files from their sources:
@@ -121,7 +121,7 @@ Create a secure connection between your Bluemix app and the database running in 
 
 	a) Give your gateway a name, toggle `Enforce security token on client` so that it is not active, and then click on `ADD DESTINATION`  
 	b) Give the destination a name, enter `127.0.0.1` as IP address, port 3306, keep TCP selected, and click the `+` button. The loopback ip address (127.0.0.1) is used because the Secure Gateway client connects to the MySQL server locally.
-	
+
 	c) Click `CONNECT IT` to retrieve the command you will need to establish the secure connection from your VM. There are options for the native installer (IBM Installer), running a docker image or using IBM DataPower.
 	Select `IBM Installer`, the screen should look as shown. Note down the Gateway ID. It is needed in step 3b. ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/sg-native-installer.png)
 
@@ -135,8 +135,8 @@ Create a secure connection between your Bluemix app and the database running in 
 	b) Create an Access Control List (ACL) to allow access to the tcp port used by MySQL. The following first creates the needed directory, then the file "sgacl.conf" and populates it with the rule `acl allow :3306` - allow access to port 3306.
 	```
 	$ sudo mkdir /etc/ibm
-	
-	$ sudo bash -c 'echo "acl allow :3306" > /etc/ibm/sgacl.conf' 
+
+	$ sudo bash -c 'echo "acl allow :3306" > /etc/ibm/sgacl.conf'
 
 	```
 	c) Install and configure the Secure Gateway using the native installer.
@@ -149,14 +149,14 @@ Create a secure connection between your Bluemix app and the database running in 
 	* When asked to "supply an ACL File", specify "/etc/ibm/sgacl.conf" - the file created above.
 	* You can just hit enter and go with the defaults for everythin else.
 	Once the install process is finished, the Secure Gateway client should start automatically.
-	
+
 	d) Verify the Secure Gateway client is connected
 	```
-	$ cat /var/log/securegateway/client_console.log 
+	$ cat /var/log/securegateway/client_console.log
 
 	```
 	The output should indicate that "The Secure Gateway tunnel is connected".
-	
+
 4. The Bluemix dashboard should also indicate that the Secure Gateway is now connected. It can be checked in the secure gateway console:
 
 	![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/screenshots/gateway-connected.jpg)
@@ -238,7 +238,7 @@ To clone, build and deploy the app on Bluemix, follow these steps:
 <If one or more of the apps in the demo exposes an API, provide a short explanation and how it is used in the sample. Link out to the published REST API documentation.>
 
 ## Contribute
-<Note how you would like developers to contribute and/or log issues to your project. Also give steps for making pull requests. If your contribution directions become lengthy, break them out into a file called ‘CONTRIBUTING.md’ and link to this.>
+We are more than happy to accept external contributions to this project, be it in the form of issues and pull requests. If you find a bug, please report it via the [Issues section][issues_url] or even better, fork the project and submit a pull request with your fix! Pull requests will be evaulated on an individual basis based on value add to the sample application.
 
 ## Troubleshooting
 
