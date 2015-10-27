@@ -272,3 +272,5 @@ For more detailed information on troubleshooting your application, see the [Trou
 [secure_gateway_catalog_url]: https://console.ng.bluemix.net/catalog/secure-gateway/
 
 [cloud_mainframe_redbook_url]: http://www.redbooks.ibm.com/redpapers/pdfs/redp5243.pdf
+
+[issues_url]: https://github.com/IBM-Bluemix/onprem-integration-demo/issues
