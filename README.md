@@ -244,6 +244,19 @@ $ cf logs <APPNAME> --recent
 ```
 For more detailed information on troubleshooting your application, see the [Troubleshooting section](https://www.ng.bluemix.net/docs/troubleshoot/tr.html) in the Bluemix documentation.
 
+### Secure Gateway
+You can restart the Secure Gateway client within your virtual machine by issuing the following command:
+```
+sudo /usr/local/bin/securegateway_clientd start
+```
+The logs for the Secure Gateway client are located at `/var/log/securegateway/client_console.log`. If you want to see what is going on, follow the output by using:
+```
+tail -f /var/log/securegateway/client_console.log
+```
+
+
+
+
 ### Links to more information
 
 [IBM Redbook: Secure Cloud-to-Mainframe Connectivity with IBM Bluemix][cloud_mainframe_redbook_url]
