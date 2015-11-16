@@ -1,8 +1,8 @@
 # Integrating a Bluemix app with data residing in an on-premises data center
 
-This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a data base that is located in a customers data center. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record) and inside a customers firewall.
+This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a database that is located in a customers data center. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record) and inside a customers firewall.
 
-We have chosen to implement the Bluemix application in node.js and are using the [secure gateway service][secure_gateway_docs_url] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
+We have chosen to implement the Bluemix application in Java EE and are using the [secure gateway service][secure_gateway_docs_url] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
 
 For many large customers, the core data that drives their business resides in established database systems behind their firewall, accessed through classic middleware (i.e., an Oracle or DB2 database accessed with .Net software). While this system sustains their business, its evolution is generally slow to non-existent. This structure does not promote the creation of nimble and engaging apps that employees and customers require.
 
@@ -11,7 +11,7 @@ By connecting modern cloud applications to these on-prem systems, we are able to
 ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
 ## Installation
-There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our cloud application will connect to. We estimate it will take you **45 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
+There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our Bluemix cloud application will connect to. We estimate it will take you **45 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
 
 **Important Note**: During the following steps, you may see frequent warnings in your console stating `sudo: unable to resolve host vm-###` when running `sudo` root commands. You can safely ignore them.
 
