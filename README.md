@@ -10,6 +10,20 @@ By connecting modern cloud applications to these on-prem systems, we are able to
 
 ![](https://raw.githubusercontent.com/IBM-Bluemix/onprem-integration-demo/master/Architecture.png?token=AFP3905kOoeJUFAYGzPbQgMuU_Q4RImlks5WBcJvwA%3D%3D)
 
+##Table of Contents
+
+ * [Installation](#installation)
+   * [Overview](#overview)
+   * [Phase 1: Create a Bluemix Virtual Machine (VM)](#phase-1-create-a-bluemix-virtual-machine-vm)
+   * [Phase 2: Install a MySQL database instance and seed it with records](#phase-2-install-a-mysql-database-instance-and-seed-it-with-records)
+   * [Phase 3: Create a Secure Gateway Connection](#phase-3-create-a-secure-gateway-connection)
+   * [Phase 4: Deploy the Bluemix App](#phase-4-deploy-the-bluemix-app)
+ * [Contribute](#contribute)
+ * [Troubleshooting](#troubleshooting)
+ * [Secure Gateway](#secure-gateway)
+ * [Links to more information](#links-to-more-information)
+
+
 ## Installation
 There are several components that need to be set up before being able to give this demo. These are all related to setting up a "mock" back-end system of record that our Bluemix cloud application will connect to. We estimate it will take you **45 minutes** to run through the steps, be aware that **you only have to do this once per Bluemix account**. The "mock" back-end can then be re-used for future demos.
 
