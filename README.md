@@ -1,6 +1,6 @@
 # Integrating a Bluemix app with data residing in an on-premises data center
 
-This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a database that is located in a customers data center. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record) and inside a customers firewall.
+This project shows how a modern web application (running on [Bluemix](https://www.bluemix.net)) integrates with a database that is located in a customers data center, behind a firewall. It is meant to illustrate an application in the public cloud is used as a ["System of Engagement"](https://en.wikipedia.org/wiki/Systems_of_Engagement), while sensitive data remains in a ["System of Record"](https://en.wikipedia.org/wiki/System_of_record).
 
 We have chosen to implement the Bluemix application in Java EE and are using the [secure gateway service][secure_gateway_docs_url] to implement an encrypted connection between it and the on-premise [MySQL](https://en.wikipedia.org/wiki/MySQL) database.
 
